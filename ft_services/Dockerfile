@@ -12,3 +12,19 @@
 
 # Установка контейнерной OS
 FROM alpine:latest
+
+RUN apk update
+RUN apk upgrade
+RUN apk add nginx
+RUN apk add openssl
+
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Устанавливаем ssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt  -subj "/C=RU/ST=Kazan/L=Kazan/O=21/OU=21School/CN=localhost"
+
+# Открытие портов
+EXPOSE 80 443
+
+# Запуск
+CMD ./start.sh
