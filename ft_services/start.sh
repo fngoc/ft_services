@@ -1,5 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 
-nginx
-
-sh
+nginx -g 'daemon off;'

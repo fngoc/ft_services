@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 # Установка контейнерной OS
-FROM alpine:latest
+FROM alpine:3.12
 
 RUN apk update
 RUN apk upgrade
@@ -27,4 +27,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private
 EXPOSE 80 443
 
 # Запуск
-CMD ./start.sh
+COPY ./start.sh /tmp/
+RUN chmod +x tmp/start.sh
+RUN mkdir -p /run/nginx
+CMD tmp/start.sh
