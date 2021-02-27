@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/22 20:35:01 by fngoc             #+#    #+#              #
-#    Updated: 2021/02/22 20:35:55 by fngoc            ###   ########.fr        #
+#    Updated: 2021/02/27 21:32:34 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf
 
 # Устанавливаем ssh
-RUN sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
-&& ssh-keygen -A && adduser -D user && echo "user:pass" | chpasswd
+RUN ssh-keygen -A && adduser -D user && echo "user:pass" | chpasswd
 
 # Устанавливаем ssl
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout \
