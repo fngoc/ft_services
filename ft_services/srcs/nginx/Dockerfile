@@ -15,11 +15,15 @@ FROM alpine:3.12
 
 RUN apk update
 RUN apk upgrade
-RUN apk add nginx openssl openssh supervisor openrc bash
+RUN apk add nginx openssl openssh supervisor openrc bash vim
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf
+
+# Устанавливаем ssh
+RUN sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
+&& ssh-keygen -A && adduser -D user && echo "user:pass" | chpasswd
 
 # Устанавливаем ssl
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout \
