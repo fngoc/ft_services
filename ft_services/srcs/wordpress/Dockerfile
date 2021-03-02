@@ -4,20 +4,25 @@ FROM alpine:3.12
 # Установка и обновление образов
 RUN apk update
 RUN apk upgrade
-RUN apk add bash vim wget \
-                    mariadb-server \
-                    php7.3 \
-                    php-mysql \
-                    php-fpm \
-                    php-pdo \
-                    php-gd \
-                    php-cli \
-                    php-mbstring \
-                    php-zip \
-                    php-xmlrpc \
-                    php-xml \
-                    php-soap \
-                    php-intl 
+RUN apk add wget \
+            nginx \
+            php-fpm \
+            php-pdo \
+            php-gd \
+            php-cli \
+            php-mbstring \
+            php-zip \
+            php-xmlrpc \
+            php-xml \
+            php-soap \
+            php-intl 
+
+# Задаем рабочую директорию
+WORKDIR /etc/nginx/sites-available/
+
+# Копируем конфиг nginx
+COPY ./nginx.conf /etc/nginx/sites-available/nginx.conf
+RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled
 
 # Установка wordpress
 WORKDIR /var/www/server
@@ -35,11 +40,14 @@ RUN rm -rf phpMyAdmin-5.0.4-all-languages.tar.gz
 RUN mv phpMyAdmin-5.0.4-all-languages/ /var/www/server/phpmyadmin
 COPY ./config.inc.php /var/www/server/phpmyadmin
 
+# Устанавливаем ssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt  -subj "/C=RU/ST=Kazan/L=Kazan/O=21/OU=21School/CN=localhost"
+
 # Копирование start.sh
 COPY ./start.sh ./
 
-# Открываем порты
-EXPOSE 5050
+# Открытие портов
+EXPOSE 5000
 
 # Выполняем команду во время запуска контейнера
-CMD sh ./start.sh
+CMD bash ./start.sh
