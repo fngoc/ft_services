@@ -1,29 +1,19 @@
-#!/bin/sh
-# Запуск сервисов
+#! /bin/sh
 
-echo "I am here 1"
-service mysql start
-service mariadb setup
-service mariadb start
-service php7.3-fpm start
-echo "I am here 2"
-# Инициализация database
-db_name='wp_base'
-username='admin'
-password='admin'
-hostname='localhost'
-echo "I am here 3"
-# wordpress database
-service mysql start
-mysql -e "CREATE DATABASE $db_name;"
-mysql -e "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password';"
-# mysql  -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"
-mysql -e "GRANT ALL PRIVILEGES ON $db_name.* TO '$username'@'$hostname' WITH GRANT OPTION;"
-mysql -e "UPDATE mysql.user SET plugin='mysql_native_password' WHERE user='$username';"
-mysql -e "FLUSH PRIVILEGES;"
-echo "I am here 4"
+#Установка mysql под пользователя mysql
+./bin/mysql_install_db --user=mysql
 
-# phpmyadmin database
-# mysql < /var/www/server/phpmyadmin/sql/create_tables.sql
-echo "I am here 5"
-sh
+#Запуск mysq
+mysqld --user=root & sleep 5
+
+#Создание базы данных для WordPress
+mysql --user=root --execute="CREATE DATABASE wordpress;"
+
+#Импортируйте ранее созданную резервную копию базы данных на сервер
+# mysql --user=root wordpress < wordpress.sql
+
+#Создайте нового пользователя "root" с паролем "pass" и предоставьте разрешения.
+mysql --user=root --execute="CREATE USER 'root'@'%' IDENTIFIED BY 'pass'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;"
+
+#Запускаем телеграф, чтобы избежать остановки контейнера прописываем команду sleep infinite
+telegraf & sleep infinite

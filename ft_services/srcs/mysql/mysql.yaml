@@ -1,17 +1,15 @@
 apiVersion: v1
-kind: PersistentVolume
+kind: Service
 metadata:
-  name: mysql-volume
+  name: mysql-svc
   labels:
-    type: local
+    app: mysql
 spec:
-  storageClassName: manual
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data_mysql"
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
 ---
 apiVersion: apps/v1
 kind: Deployment
