@@ -1,7 +1,7 @@
 #! /bin/sh
 
-#Установка mysql под пользователя mysql
-./bin/mysql_install_db --user=mysql
+#Установка mysql под пользователя root
+mariadb-install-db --user=root
 
 #Запуск mysq
 mysqld --user=root & sleep 5
