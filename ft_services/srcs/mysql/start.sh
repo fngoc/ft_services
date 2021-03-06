@@ -15,5 +15,7 @@ mysql --user=root --execute="CREATE DATABASE wordpress;"
 #Создайте нового пользователя "root" с паролем "pass" и предоставьте разрешения.
 mysql --user=root --execute="CREATE USER 'root'@'%' IDENTIFIED BY 'pass'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;"
 
+# "SELECT * FROM `wp_users`"
+
 #Запускаем телеграф, чтобы избежать остановки контейнера прописываем команду sleep infinite
 telegraf & sleep infinite

@@ -15,11 +15,13 @@ FROM alpine:3.12
 
 RUN apk update
 RUN apk upgrade
-RUN apk add nginx openssl openssh supervisor openrc bash vim
+RUN apk add nginx openssl openssh supervisor openrc bash vim \
+    telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted --no-cache
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf
+COPY ./telegraf.conf /etc/telegraf/
 
 # Устанавливаем ssh
 RUN ssh-keygen -A && adduser -D user && echo "user:pass" | chpasswd
