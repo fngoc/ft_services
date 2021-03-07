@@ -11,10 +11,11 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout \
     /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt \
     -subj "/C=RU/ST=Kazan/L=Kazan/O=21/OU=21School/CN=localhost"
 
+RUN mkdir -p home/user/ftp
 COPY ./vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY ./telegraf.conf /etc/telegraf/
 COPY ./start.sh	/
 
-EXPOSE 21 20 3000
+EXPOSE 21 20 3001
 
 CMD sh start.sh

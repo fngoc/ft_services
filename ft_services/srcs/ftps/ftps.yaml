@@ -19,9 +19,9 @@ spec:
       port: 21
       targetPort: 21
     - protocol: TCP
-      name: passive-port
-      port: 3000
-      targetPort: 3000
+      name: pasv
+      port: 3001
+      targetPort: 3001
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -46,4 +46,4 @@ spec:
           ports:
             - containerPort: 20
             - containerPort: 21
-            - containerPort: 3000
+            - containerPort: 3001

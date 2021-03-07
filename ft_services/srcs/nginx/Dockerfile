@@ -23,7 +23,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf
 COPY ./telegraf.conf /etc/telegraf/
 
-# Устанавливаем ssh
+# Устанавливаем ssh и пользователя
 RUN ssh-keygen -A && adduser -D user && echo "user:pass" | chpasswd
 
 # Устанавливаем ssl

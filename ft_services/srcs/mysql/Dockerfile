@@ -9,7 +9,7 @@ RUN apk add sudo vim mysql mysql-client \
 RUN mkdir -p /run/mysqld/
 
 COPY ./telegraf.conf /etc/telegraf/
-# COPY ./wordpress.sql /
+COPY ./wordpress.sql /
 COPY ./my.cnf /etc/
 COPY ./start.sh /tmp/
 RUN sudo chmod -R 755 /var/lib/mysql/

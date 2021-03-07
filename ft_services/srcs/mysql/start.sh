@@ -10,12 +10,11 @@ mysqld --user=root & sleep 5
 mysql --user=root --execute="CREATE DATABASE wordpress;"
 
 #Импортируйте ранее созданную резервную копию базы данных на сервер
-# mysql --user=root wordpress < wordpress.sql
+mysql --user=root wordpress < wordpress.sql
 
 #Создайте нового пользователя "root" с паролем "pass" и предоставьте разрешения.
 mysql --user=root --execute="CREATE USER 'root'@'%' IDENTIFIED BY 'pass'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;"
 
-# "SELECT * FROM `wp_users`"
-
 #Запускаем телеграф, чтобы избежать остановки контейнера прописываем команду sleep infinite
-telegraf & sleep infinite
+telegraf &
+sleep infinite

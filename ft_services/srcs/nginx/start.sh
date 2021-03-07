@@ -2,4 +2,5 @@
 
 ssh-keygen -A
 
-telegraf & /usr/bin/supervisord -c /etc/supervisord.conf
+telegraf &
+/usr/bin/supervisord -c /etc/supervisord.conf
