@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 #Установка mysql под пользователя root
 mariadb-install-db --user=root

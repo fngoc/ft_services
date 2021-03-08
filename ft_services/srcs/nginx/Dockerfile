@@ -22,6 +22,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf
 COPY ./telegraf.conf /etc/telegraf/
+COPY ./index.html /www/index.html
 
 # Устанавливаем ssh и пользователя
 RUN ssh-keygen -A && adduser -D user && echo "user:pass" | chpasswd
