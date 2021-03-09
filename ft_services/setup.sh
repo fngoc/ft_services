@@ -8,6 +8,7 @@ minikube start --vm-driver=virtualbox
 #Установка minikube и metallb
 eval $(minikube docker-env)
 minikube addons enable metallb
+minikube addons enable metrics-server
 minikube addons list
 
 #Установка nginx

@@ -2,7 +2,7 @@ FROM alpine:3.12
 
 RUN apk update
 RUN apk upgrade
-RUN apk add vsftpd openrc vim openssl \
+RUN apk add sudo vsftpd openrc vim openssl \
     telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted --no-cache
 
 RUN adduser -D user && echo "user:pass" | chpasswd
@@ -11,11 +11,12 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout \
     /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt \
     -subj "/C=RU/ST=Kazan/L=Kazan/O=21/OU=21School/CN=localhost"
 
-RUN mkdir -p home/user/ftp
+RUN mkdir -p home/user/
+RUN sudo chmod -R 755 home/user/
 COPY ./vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY ./telegraf.conf /etc/telegraf/
 COPY ./start.sh	/
 
-EXPOSE 21 20 3001
+EXPOSE 21 20 20020
 
 CMD sh start.sh

@@ -2,7 +2,7 @@ FROM alpine:3.12
 
 RUN apk update
 RUN apk upgrade
-RUN apk add sudo openrc vim wget\
+RUN apk add sudo openrc vim wget \
     telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted --no-cache
 
 RUN wget https://dl.grafana.com/oss/release/grafana-7.4.0.linux-amd64.tar.gz
@@ -14,6 +14,7 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/s
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
 RUN apk add glibc-2.28-r0.apk
 
+COPY ./grafana.db /grafana-7.4.0/data/grafana.db
 COPY ./telegraf.conf /etc/telegraf/
 COPY ./start.sh /tmp/
 RUN chmod +x tmp/start.sh
