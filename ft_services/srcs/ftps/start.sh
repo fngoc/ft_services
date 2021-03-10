@@ -1,4 +1,3 @@
 #!/bin/sh
 
-telegraf &
-vsftpd /etc/vsftpd/vsftpd.conf
+/usr/bin/supervisord -c /etc/supervisord.conf

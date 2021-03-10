@@ -15,6 +15,5 @@ mysql --user=root wordpress < wordpress.sql
 #Создайте нового пользователя "root" с паролем "pass" и предоставьте разрешения.
 mysql --user=root --execute="CREATE USER 'root'@'%' IDENTIFIED BY 'pass'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION; USE wordpress; FLUSH PRIVILEGES;"
 
-#Запускаем телеграф, чтобы избежать остановки контейнера прописываем команду sleep infinite
-telegraf &
-sleep infinite
+#Запускаем
+/usr/bin/supervisord -c /etc/supervisord.conf

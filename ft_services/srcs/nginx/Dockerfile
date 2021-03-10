@@ -6,18 +6,20 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/22 20:35:01 by fngoc             #+#    #+#              #
-#    Updated: 2021/02/22 20:35:55 by fngoc            ###   ########.fr        #
+#    Updated: 2021/03/10 11:33:45 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Установка контейнерной OS
 FROM alpine:3.12
 
+# Установка и обновление образов
 RUN apk update
 RUN apk upgrade
 RUN apk add nginx openssl openssh supervisor openrc bash vim \
     telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted --no-cache
 
+# Копирование
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./supervisor.conf /etc/supervisord.conf

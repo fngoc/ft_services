@@ -1,3 +1,6 @@
 #!/bin/sh
 
-/etc/init.d/telegraf start & influxd
+/usr/bin/supervisord -c /etc/supervisord.conf
+
+influx -execute "CREATE DATABASE telegraf"
+influx -execute "CREATE USER telegraf WITH PASSWORD 'telegraf'"

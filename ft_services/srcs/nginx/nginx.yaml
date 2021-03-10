@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    nginx.yaml                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/03/10 14:21:54 by fngoc             #+#    #+#              #
+#    Updated: 2021/03/10 14:21:59 by fngoc            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -47,15 +59,3 @@ spec:
             - containerPort: 80
             - containerPort: 443
             - containerPort: 22
-
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: nginx
-#   labels:
-#     app: nginx
-# spec:
-#   containers:
-#   - name: nginx
-#     image: nginx_image
-#     imagePullPolicy: Never
