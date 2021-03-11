@@ -16,3 +16,5 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
 
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
+
+$cfg['TempDir'] = '/tmp';

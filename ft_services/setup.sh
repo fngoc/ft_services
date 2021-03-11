@@ -3,7 +3,7 @@
 minikube stop
 minikube delete
 VBoxManage hostonlyif remove vboxnet0
-minikube start --vm-driver=virtualbox
+minikube start --vm-driver=virtualbox --cpus=4 --memory=4G --disk-size=50G
 
 #Установка minikube и metallb
 eval $(minikube docker-env)
@@ -32,13 +32,13 @@ kubectl apply -f ./srcs/wordpress/wordpress.yaml
 docker build -t ftps_image srcs/ftps
 kubectl apply -f ./srcs/ftps/ftps.yaml
 
-#Установка grafana
-docker build -t grafana_image srcs/grafana
-kubectl apply -f ./srcs/grafana/grafana.yaml
-
 #Установка influxdb
 docker build -t influxdb_image srcs/influxdb
 kubectl apply -f ./srcs/influxdb/influxdb.yaml
+
+#Установка grafana
+docker build -t grafana_image srcs/grafana
+kubectl apply -f ./srcs/grafana/grafana.yaml
 
 #Вызов dashboard
 minikube dashboard
