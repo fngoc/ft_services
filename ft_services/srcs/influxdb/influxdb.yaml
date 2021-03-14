@@ -5,24 +5,23 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/03/10 14:22:18 by fngoc             #+#    #+#              #
-#    Updated: 2021/03/10 14:22:19 by fngoc            ###   ########.fr        #
+#    Created: 2021/03/14 13:49:33 by fngoc             #+#    #+#              #
+#    Updated: 2021/03/14 13:49:42 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: influxdb
   name: influxdb-svc
 spec:
-  ports:
-  - port: 8086
-    protocol: TCP
-    targetPort: 8086
+  type: ClusterIP
   selector:
     app: influxdb
+  ports:
+    - protocol: TCP
+      port: 8086
+      targetPort: 8086
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -32,7 +31,7 @@ metadata:
   name: influxdb-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
@@ -40,35 +39,33 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: influxdb
   name: influxdb
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: influxdb
   strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
         app: influxdb
     spec:
-      containers:
-      - image: influxdb_image
-        imagePullPolicy: Never
-        name: influxdb
-        ports:
-        - name: influxdb
-          containerPort: 8086
-        volumeMounts:
-        - name: influxdb-persistent-storage
-          mountPath: var/lib/influxdb
       volumes:
-        - name: influxdb-persistent-storage
+        - name: influxdb-volume
           persistentVolumeClaim:
             claimName: influxdb-pvc
+        - name: dockersock
+          hostPath:
+            path: /var/run/docker.sock
+      containers:
+        - name: influxdb
+          image: influxdb_image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8086
+          volumeMounts:
+            - name: influxdb-volume
+              mountPath: /var/lib/influxdb
+            - name: dockersock
+              mountPath: /var/run/docker.sock

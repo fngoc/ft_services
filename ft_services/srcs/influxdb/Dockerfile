@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/10 14:20:40 by fngoc             #+#    #+#              #
-#    Updated: 2021/03/11 12:44:23 by fngoc            ###   ########.fr        #
+#    Updated: 2021/03/14 13:49:14 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ COPY ./supervisor.conf /etc/supervisord.conf
 COPY ./telegraf.conf /etc/telegraf/
 COPY ./start.sh /tmp/
 RUN chmod +x tmp/start.sh
+
+# Открытие волюма
+VOLUME	["var/lib/influxdb"]
 
 # Открытие портов
 EXPOSE 8086
