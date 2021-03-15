@@ -6,7 +6,7 @@
 #    By: fngoc <fngoc@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/10 13:16:13 by fngoc             #+#    #+#              #
-#    Updated: 2021/03/10 13:16:14 by fngoc            ###   ########.fr        #
+#    Updated: 2021/03/15 13:08:51 by fngoc            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ COPY ./my.cnf /etc/
 COPY ./start.sh /tmp/
 RUN sudo chmod -R 755 /var/lib/mysql/
 RUN chmod +x tmp/start.sh
+
+# Открытие волюма
+VOLUME ["/var/lib/mysql"]
 
 # Открытие портов
 EXPOSE 3306

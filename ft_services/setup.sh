@@ -42,4 +42,3 @@ kubectl apply -f ./srcs/grafana/grafana.yaml
 
 #Вызов dashboard
 minikube dashboard
-
