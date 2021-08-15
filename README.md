@@ -77,7 +77,3 @@ Service - an abstraction that defines the Pod access policy. It has 4 main types
 Deployment - deployment controller.
 
 Pod is the smallest functional unit in Kubernetes. It consists of one or more containers, storage, a separate IP address, and options that define how the containers should be started.
-
-## Evaluation
-
-![alt tag](media/appraisal_ft_services.png "Appraisal ft_services")
