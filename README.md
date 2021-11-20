@@ -8,7 +8,7 @@ If the process in the container or the container crashes, pod will restart itsel
 
 The entire assembly process is carried out in ``setup.sh``
 
-## Using
+## Usage
 
 Before starting, you need to install ``VirtualBox`` and ``Minikube``.
 
